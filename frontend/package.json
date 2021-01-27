@@ -17,6 +17,7 @@
     "gatsby-plugin-sharp": "^2.2.37",
     "gatsby-plugin-theme-ui": "^0.3.0",
     "gatsby-source-filesystem": "^2.1.36",
+    "gatsby-source-strapi": "0.0.12",
     "gatsby-theme-style-guide": "^0.3.1",
     "gatsby-transformer-sharp": "^2.3.3",
     "normalize.css": "^8.0.1",
