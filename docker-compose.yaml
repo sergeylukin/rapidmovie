@@ -6,13 +6,14 @@ services:
       dockerfile: Dockerfile
     container_name: rapidmovie-frontend
     working_dir: /app
-    command: ./entrypoint.sh
+    command: ["./scripts/wait-for-it.sh", "rapidmovie-backend:1337", "--", "./scripts/entrypoint.sh"]
     environment:
       BACKEND_API_URL: ${BACKEND_API_URL}
     ports:
       - "8000:8000"
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     depends_on:
       - backend
 
