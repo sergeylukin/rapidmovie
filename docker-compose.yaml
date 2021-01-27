@@ -1,5 +1,21 @@
 version: '3'
 services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: rapidmovie-frontend
+    working_dir: /app
+    command: ./entrypoint.sh
+    environment:
+      BACKEND_API_URL: ${BACKEND_API_URL}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+
   backend:
     image: strapi/strapi
     container_name: rapidmovie-backend
