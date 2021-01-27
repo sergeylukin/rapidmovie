@@ -1,9 +1,11 @@
 previewsEnabled: true
 previewsExpireAfterDays: 1
 services:
+  # Production backend
   - type: web
     name: rapidmovie-backend
     env: node
+    branch: main
     plan: starter
     previewPlan: starter
     buildCommand: cd backend && npm install && npm run build
@@ -43,10 +45,12 @@ services:
         generateValue: true
       - key: ADMIN_JWT_SECRET
         generateValue: true
-  # A static site
+  # Production frontend
   - type: web
     name: rapidmovie-frontend
     env: static
+    branch: main
+    pullRequestPreviewsEnabled: true
     domains:
       - rapidmovie.sergeylukin.com
     envVars:
@@ -59,9 +63,73 @@ services:
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/public
 
+  # Staging backend
+  - type: web
+    name: rapidmovie-backend-staging
+    env: node
+    branch: staging
+    plan: starter
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: cd backend && npm start
+    healthCheckPath: /
+    numInstances: 1
+    domains:
+      - rapidmovie-backend-staging.sergeylukin.com
+    envVars:
+      - key: NODE_VERSION
+        value: 12.18.4
+      - key: NODE_ENV
+        value: staging
+      - key: DATABASE_CLIENT
+        value: postgres
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: rapidmovie-postgres-staging
+          property: database
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: rapidmovie-postgres-staging
+          property: host
+      - key: DATABASE_PORT
+        fromDatabase:
+          name: rapidmovie-postgres-staging
+          property: port
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: rapidmovie-postgres-staging
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: rapidmovie-postgres-staging
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_JWT_SECRET
+        generateValue: true
+  # Staging frontend
+  - type: web
+    name: rapidmovie-frontend-staging
+    env: static
+    branch: staging
+    domains:
+      - rapidmovie-staging.sergeylukin.com
+    envVars:
+      - key: NODE_VERSION
+        value: 12.18.4
+      - key: NODE_ENV
+        value: production
+      - key: BACKEND_API_URL
+        value: https://rapidmovie-backend-staging.sergeylukin.com
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/public
+
 databases:
   - name: rapidmovie-postgres
     databaseName: rapidmovie
     ipAllowList: []
     plan: starter
     previewPlan: starter
+
+  - name: rapidmovie-postgres-staging
+    databaseName: rapidmoviestaging
+    plan: starter
