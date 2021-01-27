@@ -1,0 +1,67 @@
+previewsEnabled: true
+previewsExpireAfterDays: 1
+services:
+  - type: web
+    name: rapidmovie-backend
+    env: node
+    plan: starter
+    previewPlan: starter
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: cd backend && npm start
+    healthCheckPath: /
+    numInstances: 2
+    domains:
+      - rapidmovie-backend.sergeylukin.com
+    envVars:
+      - key: NODE_VERSION
+        value: 12.18.4
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_CLIENT
+        value: postgres
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: rapidmovie-postgres
+          property: database
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: rapidmovie-postgres
+          property: host
+      - key: DATABASE_PORT
+        fromDatabase:
+          name: rapidmovie-postgres
+          property: port
+      - key: DATABASE_USERNAME
+        fromDatabase:
+          name: rapidmovie-postgres
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: rapidmovie-postgres
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_JWT_SECRET
+        generateValue: true
+  # A static site
+  - type: web
+    name: rapidmovie-frontend
+    env: static
+    domains:
+      - rapidmovie.sergeylukin.com
+    envVars:
+      - key: NODE_VERSION
+        value: 12.18.4
+      - key: NODE_ENV
+        value: production
+      - key: BACKEND_API_URL
+        value: https://rapidmovie-backend.sergeylukin.com
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/public
+
+databases:
+  - name: rapidmovie-postgres
+    databaseName: rapidmovie
+    ipAllowList: []
+    plan: starter
+    previewPlan: starter
