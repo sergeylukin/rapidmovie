@@ -9,20 +9,22 @@ const fetch = require('node-fetch');
  */
 const fetchMovie = async (imdbID) => {
   const result = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=c21b2407`)
-  let response = result.json()
+  let response = await result.json()
   let movie = {}
-  for (let key of response) {
+  for (let key in response) {
+    if (!response.hasOwnProperty(key)) continue;
     switch (key) {
-      case "Title": movie.title = reponse[key]; break;
-      case "Year": movie.year = reponse[key]; break;
-      case "Rated": movie.rated = reponse[key]; break;
-      case "Released": movie.released = reponse[key]; break;
-      case "Genre": movie.genre = reponse[key]; break;
-      case "Director": movie.director = reponse[key]; break;
-      case "Writer": movie.writer = reponse[key]; break;
-      case "Actors": movie.actors = reponse[key]; break;
-      case "Plot": movie.plot = reponse[key]; break;
-      case "imdbRating": movie.imdbRating = reponse[key]; break;
+      case "Title": movie.title = response[key]; break;
+      case "Year": movie.year = parseInt(response[key], 10); break;
+      case "Rated": movie.rated = response[key]; break;
+      case "Released": movie.released = response[key]; break;
+      case "Runtime": movie.runtime = response[key]; break;
+      case "Genre": movie.genre = response[key]; break;
+      case "Director": movie.director = response[key]; break;
+      case "Writer": movie.writer = response[key]; break;
+      case "Actors": movie.actors = response[key]; break;
+      case "Plot": movie.plot = response[key]; break;
+      case "imdbRating": movie.imdbRating = parseFloat(response[key]); break;
     }
   }
   return movie
@@ -37,11 +39,14 @@ module.exports = {
       }
     },
     async beforeUpdate(params, data) {
-      console.log(strapi.config)
-      if (!data.title) {
-        const movie = fetchMovie(data.imdbID)
+      console.log(data)
+      if (data.fetchDataFromRemote) {
+        const movie = await fetchMovie(data.imdbID)
         console.log(movie)
-        data = {...data, ...movie}
+        for (let key in movie) {
+          data[key] = movie[key]
+        }
+        data.fetchDataFromRemote = false
       }
       if (!data.slug) {
         data.slug = slugify(data.title, {lower: true}) + '-' + params.id;
@@ -49,8 +54,9 @@ module.exports = {
     },
     async afterCreate(model) {
       console.log(model)
-      if (!model.title) {
+      if (model.fetchDataFromRemote) {
         const movie = fetchMovie(model.imdbID)
+        movie.fetchDataFromRemote = false
         await strapi.query('movie').update({ id: model.id }, movie)
       }
       if (!model.slug) {

@@ -27,19 +27,19 @@
       "type": "string"
     },
     "genre": {
-      "type": "string"
+      "type": "text"
     },
     "director": {
-      "type": "string"
+      "type": "text"
     },
     "writer": {
-      "type": "string"
+      "type": "text"
     },
     "actors": {
-      "type": "string"
+      "type": "text"
     },
     "plot": {
-      "type": "string"
+      "type": "text"
     },
     "imdbRating": {
       "type": "decimal"
@@ -51,6 +51,9 @@
     },
     "slug": {
       "type": "string"
+    },
+    "fetchDataFromRemote": {
+      "type": "boolean"
     }
   }
 }

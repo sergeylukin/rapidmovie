@@ -37,22 +37,12 @@ cp .env.example .env # sane defaults in place
 Rock'n roll (will take a few mins at first, see below on how to watch the progress):
 
 ```
-docker-compose up -d
+docker-compose up
 ```
 
-Temporarily stop dev environment:
+`Ctrl + c` exits and stops all instances, just `docker-compose up` to resume
 
-```
-docker-compose stop
-```
-
-Resume:
-
-```
-docker-compose start
-```
-
-Resets the whole thing:
+Resets the whole thing (delete instances, images, etc.):
 
 ```
 docker-compose down --rmi all -v
