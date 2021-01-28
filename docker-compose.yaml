@@ -13,13 +13,16 @@ services:
       - "8000:8000"
     volumes:
       - ./frontend:/app
-      - /app/node_modules
     depends_on:
       - backend
 
   backend:
-    image: strapi/strapi
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: rapidmovie-backend
+    working_dir: /srv/app
+    entrypoint: "./entrypoint.sh"
     env_file: .env
     environment:
       DATABASE_CLIENT: ${DATABASE_CLIENT}
@@ -31,7 +34,13 @@ services:
     volumes:
       - ./backend:/srv/app
     ports:
+        # 1337 is REST API and GraphQL server
       - '1337:1337'
+        # 1338 is webpack-powered live-reloading endpoint
+        # if you don't need that just use 1337 instead
+        # and replace `strapi develop --watch-admin` with `strapi start`
+        # in entrypoint.sh to avoid rebuilding frontend assets on every source file change
+      - '1338:1338'
     depends_on:
       - postgres
 
