@@ -8,8 +8,17 @@ const fetch = require('node-fetch');
  * to customize this model
  */
 const fetchMovie = async (imdbID) => {
-  const result = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=c21b2407`)
+  const OMDB = strapi.store({
+    environment: strapi.config.environment,
+    type: 'plugin',
+    name: 'rapidmovie-omdb',
+  })
+  const apiKey = await OMDB.get({ key: 'apiKey' })
+  const result = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=${apiKey}`)
   let response = await result.json()
+  if (response.Error) {
+    throw new Error(response.Error)
+  }
   let movie = {}
   for (let key in response) {
     if (!response.hasOwnProperty(key)) continue;
@@ -41,7 +50,11 @@ module.exports = {
     async beforeUpdate(params, data) {
       const model = await strapi.query('movie').findOne({ id: params.id });
       if (data.fetchDataFromRemote) {
-        const movie = await fetchMovie(data.imdbID)
+        try {
+          const movie = await fetchMovie(data.imdbID)
+        } catch(err) {
+          throw strapi.errors.serverUnavailable(err)
+        }
         console.log(movie)
         for (let key in movie) {
           data[key] = movie[key]
@@ -57,7 +70,11 @@ module.exports = {
     },
     async afterCreate(model) {
       if (model.fetchDataFromRemote) {
-        const movie = fetchMovie(model.imdbID)
+        try {
+          const movie = fetchMovie(model.imdbID)
+        } catch (err) {
+          throw strapi.errors.serverUnavailable(err)
+        }
         movie.fetchDataFromRemote = false
         await strapi.query('movie').update({ id: model.id }, movie)
       }
