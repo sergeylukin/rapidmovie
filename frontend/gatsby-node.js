@@ -6,4 +6,32 @@
 
 // You can delete this file if you're not using it
 exports.createPages = async ({ actions: { createPage }, graphql}) => {
+  await graphql(`
+    {
+      allStrapiMovie {
+        nodes {
+          id
+          title
+          plot
+          imdbRating
+          imdbID
+          slug
+        }
+      }
+    }
+  `).then(res => {
+    res.data.allStrapiArticle.nodes.forEach(({id, title, plot, imdbRating, imdbID}) => {
+      createPage({
+        path: `/movies/${imdbID}`,
+        component: require.resolve('./src/components/movie'),
+        context: {
+          id,
+          title,
+          plot,
+          imdbRating,
+          imdbID
+        }
+      })
+    })
+  })
 }

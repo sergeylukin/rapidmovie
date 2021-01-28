@@ -58,6 +58,22 @@ Resets the whole thing:
 docker-compose down --rmi all -v
 ```
 
+To manage backend `NPM` dependencies, use `npm` straight inside container:
+
+```
+docker exec -it rapidmovie-backend /bin/bash
+# npm install --save ...
+```
+
+Similarly, manage frontend dependencies:
+
+```
+docker exec -it rapidmovie-frontend /bin/bash
+# npm install --save ...
+```
+
+...return to host machine and commit your changes regularly
+
 ### Debugging, logging
 
 First of all, see your containers running:

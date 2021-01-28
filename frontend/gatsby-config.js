@@ -37,7 +37,7 @@ module.exports = {
       options: {
         apiURL: process.env.BACKEND_API_URL,
         queryLimit: 10000,
-        contentTypes: [`article`],
+        contentTypes: [`movie`],
       },
     },
   ],
