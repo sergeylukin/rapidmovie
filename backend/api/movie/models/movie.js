@@ -39,7 +39,7 @@ module.exports = {
       }
     },
     async beforeUpdate(params, data) {
-      console.log(data)
+      const model = await strapi.query('movie').findOne({ id: params.id });
       if (data.fetchDataFromRemote) {
         const movie = await fetchMovie(data.imdbID)
         console.log(movie)
@@ -48,12 +48,14 @@ module.exports = {
         }
         data.fetchDataFromRemote = false
       }
-      if (!data.slug) {
-        data.slug = slugify(data.title, {lower: true}) + '-' + params.id;
+      if (!model.slug) {
+        const title = data.title ? data.title : model.title
+        if (title) {
+          data.slug = slugify(title, {lower: true}) + '-' + params.id;
+        }
       }
     },
     async afterCreate(model) {
-      console.log(model)
       if (model.fetchDataFromRemote) {
         const movie = fetchMovie(model.imdbID)
         movie.fetchDataFromRemote = false
