@@ -9,6 +9,13 @@ Frontend: https://rapidmovie.sergeylukin.com/
 Backend: https://rapidmovie-backend.sergeylukin.com/admin (contact
 [@sergeylukin](https://github.com/sergeylukin) for credentials)
 
+## Staging
+
+Frontend: https://rapidmovie-staging.sergeylukin.com/
+
+Backend: https://rapidmovie-backend-staging.sergeylukin.com/admin (contact
+[@sergeylukin](https://github.com/sergeylukin) for credentials)
+
 # Deployment
 
 One command to production deployment (including infra): `git push`
