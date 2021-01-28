@@ -20,7 +20,7 @@ exports.createPages = async ({ actions: { createPage }, graphql}) => {
       }
     }
   `).then(res => {
-    res.data.allStrapiArticle.nodes.forEach(({id, title, plot, imdbRating, imdbID}) => {
+    res.data.allStrapiMovie.nodes.forEach(({id, title, plot, imdbRating, imdbID}) => {
       createPage({
         path: `/movies/${imdbID}`,
         component: require.resolve('./src/components/movie'),
