@@ -49,36 +49,36 @@ module.exports = {
     },
     async beforeUpdate(params, data) {
       const model = await strapi.query('movie').findOne({ id: params.id });
-      if (data.fetchDataFromRemote) {
-        try {
+      try {
+        if (data.fetchDataFromRemote) {
           const movie = await fetchMovie(data.imdbID)
-        } catch(err) {
-          throw strapi.errors.serverUnavailable(err)
+          console.log(movie)
+          for (let key in movie) {
+            data[key] = movie[key]
+          }
+          data.fetchDataFromRemote = false
         }
-        console.log(movie)
-        for (let key in movie) {
-          data[key] = movie[key]
+        if (!model.slug) {
+          const title = data.title ? data.title : model.title
+          if (title) {
+            data.slug = slugify(title, {lower: true}) + '-' + params.id;
+          }
         }
-        data.fetchDataFromRemote = false
-      }
-      if (!model.slug) {
-        const title = data.title ? data.title : model.title
-        if (title) {
-          data.slug = slugify(title, {lower: true}) + '-' + params.id;
-        }
+      } catch(err) {
+        throw strapi.errors.serverUnavailable(err)
       }
     },
     async afterCreate(model) {
       if (model.fetchDataFromRemote) {
         try {
-          const movie = fetchMovie(model.imdbID)
+          const movie = await fetchMovie(model.imdbID)
+          movie.fetchDataFromRemote = false
+          await strapi.query('movie').update({ id: model.id }, movie)
         } catch (err) {
           throw strapi.errors.serverUnavailable(err)
         }
-        movie.fetchDataFromRemote = false
-        await strapi.query('movie').update({ id: model.id }, movie)
       }
-      if (!model.slug) {
+      if (model.title && !model.slug) {
         let slug = slugify(model.title, {lower: true}) + '-' + model.id;
         await strapi.query('movie').update({ id: model.id }, { slug })
       }
