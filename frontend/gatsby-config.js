@@ -3,6 +3,7 @@ module.exports = {
     title: `Gatsby Default Starter`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
+    gatsbyBackendURL: process.env.GATSBY_BACKEND_URL,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -35,10 +36,14 @@ module.exports = {
     {
       resolve: `gatsby-source-strapi`,
       options: {
-        apiURL: process.env.BACKEND_API_URL,
+        apiURL: process.env.GATSBY_BACKEND_URL,
         queryLimit: 10000,
         contentTypes: [`movie`],
       },
     },
+    // {
+    //   resolve: `gatsby-plugin-create-client-paths`,
+    //   options: { prefixes: [`/mo/*`] },
+    // },
   ],
 }

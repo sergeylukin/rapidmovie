@@ -46,6 +46,22 @@ module.exports = {
       if (!data.imdbID) {
         throw new Error('IMDB id should not be blank')
       }
+      if (data.fetchDataFromRemote) {
+        try {
+          const movie = await fetchMovie(data.imdbID)
+          movie.fetchDataFromRemote = false
+          for (let key in movie) {
+            data[key] = movie[key]
+          }
+          // await strapi.query('movie').update({ id: model.id }, movie)
+        } catch (err) {
+          throw strapi.errors.serverUnavailable(err)
+        }
+      }
+      if (data.title && !data.slug) {
+        data.slug = slugify(data.title, {lower: true}) + '-' + data.id;
+        // await strapi.query('movie').update({ id: model.id }, { slug })
+      }
     },
     async beforeUpdate(params, data) {
       const model = await strapi.query('movie').findOne({ id: params.id });
@@ -69,19 +85,6 @@ module.exports = {
       }
     },
     async afterCreate(model) {
-      if (model.fetchDataFromRemote) {
-        try {
-          const movie = await fetchMovie(model.imdbID)
-          movie.fetchDataFromRemote = false
-          await strapi.query('movie').update({ id: model.id }, movie)
-        } catch (err) {
-          throw strapi.errors.serverUnavailable(err)
-        }
-      }
-      if (model.title && !model.slug) {
-        let slug = slugify(model.title, {lower: true}) + '-' + model.id;
-        await strapi.query('movie').update({ id: model.id }, { slug })
-      }
     },
   },
 };

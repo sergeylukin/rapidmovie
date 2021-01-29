@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React from "react"
 import { Link, graphql } from "gatsby"
-import { Flex, Styled, jsx, Grid, Box } from "theme-ui"
+import { Flex, Styled, Text, jsx, Grid, Box } from "theme-ui"
 import Img from 'gatsby-image'
 
 import Layout from "../components/layout"
@@ -13,6 +13,7 @@ const IndexPage = ({ data }) => {
     <Layout>
       <SEO title="Home" />
       <Box sx={{ variant: 'variants.siteContainer' }}>
+        <Text>Hello World!</Text>
       </Box>
     </Layout>
   )

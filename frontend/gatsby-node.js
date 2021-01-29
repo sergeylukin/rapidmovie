@@ -5,7 +5,7 @@
  */
 
 // You can delete this file if you're not using it
-exports.createPages = async ({ actions: { createPage }, graphql}) => {
+exports.createPages = async ({ page, actions: { createPage }, graphql}) => {
   await graphql(`
     {
       allStrapiMovie {
@@ -17,19 +17,33 @@ exports.createPages = async ({ actions: { createPage }, graphql}) => {
           imdbID
           slug
         }
+      },
+      site {
+        siteMetadata {
+          gatsbyBackendURL
+        }
       }
     }
   `).then(res => {
-    res.data.allStrapiMovie.nodes.forEach(({id, title, plot, imdbRating, imdbID}) => {
+    const gatsbyBackendURL = res.data.site.siteMetadata.gatsbyBackendURL
+    console.log(gatsbyBackendURL)
+    createPage({
+      path: `/:imdbID`,
+      matchPath: `/:imdbID`,
+      component: require.resolve(`./src/components/movie`),
+      context: {
+        gatsbyBackendURL
+      }
+    })
+    res.data.allStrapiMovie.nodes.forEach(({title, plot, imdbRating, imdbID}) => {
       createPage({
-        path: `/movies/${imdbID}`,
+        path: `/${imdbID}`,
         component: require.resolve('./src/components/movie'),
         context: {
-          id,
           title,
           plot,
           imdbRating,
-          imdbID
+          gatsbyBackendURL,
         }
       })
     })

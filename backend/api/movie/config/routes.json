@@ -18,7 +18,7 @@
     },
     {
       "method": "GET",
-      "path": "/movies/:id",
+      "path": "/movies/:imdbID",
       "handler": "movie.findOne",
       "config": {
         "policies": []
