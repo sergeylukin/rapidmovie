@@ -8,7 +8,7 @@ services:
     working_dir: /app
     command: ["./scripts/wait-for-it.sh", "rapidmovie-backend:1337", "--", "./scripts/entrypoint.sh"]
     environment:
-      BACKEND_API_URL: ${BACKEND_API_URL}
+      GATSBY_BACKEND_URL: ${GATSBY_BACKEND_URL}
     ports:
       - "8000:8000"
     volumes:
@@ -35,6 +35,7 @@ services:
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      OMDB_API_KEY: ${OMDB_API_KEY}
     volumes:
       - ./backend:/srv/app
     ports:

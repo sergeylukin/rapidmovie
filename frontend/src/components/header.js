@@ -1,16 +1,13 @@
 /** @jsx jsx */
-import { Styled, jsx } from "theme-ui"
+import { Box, Styled, jsx } from "theme-ui"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 
 const Header = ({ siteTitle }) => (
-  <Styled.div
+  <Box
     as="header"
-    sx={{
-      background: `background`,
-      marginBottom: 4,
-    }}
+    variant="variants.siteHeader"
   >
     <div
       sx={{
@@ -32,7 +29,7 @@ const Header = ({ siteTitle }) => (
         </Link>
       </Styled.h1>
     </div>
-  </Styled.div>
+  </Box>
 )
 
 Header.propTypes = {

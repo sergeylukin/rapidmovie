@@ -154,6 +154,14 @@ module.exports = async () => {
   const firstRun = await isFirstRun();
 
   if (firstRun && process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'staging') {
+
+    const pluginStore = strapi.store({
+      environment: strapi.config.environment,
+      type: 'plugin',
+      name: 'rapidmovie-omdb',
+    })
+    await pluginStore.set({ key: 'apiKey', value: process.env.OMDB_API_KEY })
+
     await bootstrap_admin()
     await setDefaultPublicPermissions('movie', ['findone', 'find'])
   }
