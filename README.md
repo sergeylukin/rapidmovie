@@ -11,10 +11,8 @@ Backend: https://rapidmovie-backend.sergeylukin.com/admin (contact
 
 ## Staging
 
-Frontend: https://rapidmovie-staging.sergeylukin.com/
-
-Backend: https://rapidmovie-backend-staging.sergeylukin.com/admin (contact
-[@sergeylukin](https://github.com/sergeylukin) for credentials)
+Stagin environment is auto-generated (copy of production cluster including all
+services) for each PR
 
 # Deployment
 
