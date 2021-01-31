@@ -5,16 +5,28 @@ export default {
     body: 'system-ui, sans-serif',
     heading: 'Georgia, serif',
   },
+  fontSizes: [
+    12, 14, 16, 20, 24, 32, 48, 64
+  ],
   fontWeights: {
     body: 400,
     heading: 700,
+  },
+  text: {
+    paragraph: {
+      py: 1,
+    }
   },
   styles: {
     header: {
       background: 'white',
     },
+    p: {
+      variant: 'text.paragraph'
+    },
     root: {
       // uses the theme values provided above
+      fontSize: 3,
       fontFamily: 'body',
       fontWeight: 'body',
     },
@@ -63,28 +75,51 @@ export default {
     },
   },
   variants: {
-    siteTitle: {
-      fontSize: [3, 4, null, 5, null],
+    movie: {
+      title: {
+        py: 4,
+        fontSize: 5,
+        fontWeight: 'bold',
+        textAlign: ['center', null, 'left', null],
+      },
+      label: {
+        fontWeight: 'bold',
+        fontSize: 2,
+      },
+      cover: {
+        '> img': {
+          maxWidth: '300px'
+        }
+      },
+      details: {
+        flexGrow: 2,
+        pl: [0, null, 2, null],
+        pt: [2, null, 0, null],
+        ' dl': {
+          m: 0,
+        },
+        ' dt': {
+          pt: 3,
+        },
+        ' dt:first-child': {
+          pt: 0,
+        },
+        ' dd': {
+          py: 1,
+          m: 0,
+        }
+      }
     },
     siteHeader: {
-      // background: baseColors.gray[6],
-      background: 'linear-gradient(180deg, #0e0e0e, #212121 15%, #0e0e0e)',
-      backgroundRepeat: 'no-repeat',
-      backgroundAttachment: 'fixed',
-      padding: [4, null, null, 5],
-      // borderBottom: "10px solid red",
-    },
-    siteContentArea: {
-      // backgroundColor: '#351212',
-      // background: 'linear-gradient(180deg, #0e0e0e, #212121 15%, #0e0e0e)',
-      // boxShadow: '0 -1px 0px 1px #2f2f2f',
-      boxShadow: '0 -1px 0px 1px #d22626, 0 -2px 0px 1px #bf0000',
-      padding: [2, null, null, 4],
+      background: baseColors.gray[6],
+      textAlign: 'center',
+      padding: [4, null, null, 3],
     },
     siteContainer: {
-      maxWidth: 1280,
+      maxWidth: 960,
       margin: '0 auto',
-      pt: [2, 0, 0, 0],
+      py: 2,
+      px: 3,
     }
   },
 }

@@ -44,11 +44,12 @@ exports.createPages = async ({ page, actions: { createPage }, graphql}) => {
     const gatsbyBackendURL = res.data.site.siteMetadata.gatsbyBackendURL
     console.log(gatsbyBackendURL)
     createPage({
-      path: `/title/:imdbID`,
-      matchPath: `/title/:imdbID`,
+      path: `/title/:slug`,
+      matchPath: `/title/:slug`,
       component: require.resolve(`./src/components/movie`),
       context: {
-        gatsbyBackendURL
+        gatsbyBackendURL,
+        ssr: false
       }
     })
     res.data.allStrapiMovie.nodes.forEach(({
@@ -103,6 +104,7 @@ exports.createPages = async ({ page, actions: { createPage }, graphql}) => {
           website,
           slug,
           gatsbyBackendURL,
+          ssr: true
         }
       })
     })

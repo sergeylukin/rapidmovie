@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Styled, jsx } from "theme-ui"
+import { Box, Styled, jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
@@ -21,23 +21,16 @@ const Layout = ({ children }) => {
   return (
     <Styled.root>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        sx={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: 3,
-          paddingTop: 0,
-        }}
-      >
+      <Box variant="variants.siteContainer">
         <main>{children}</main>
         <footer>
-          <Styled.p>
-            © {new Date().getFullYear()}, Built with
-            {` `}
-            <a href="https://www.gatsbyjs.org">Gatsby</a>
+          <Styled.p sx={{ p: 4, textAlign: 'center' }}>
+            Built with 
+            <Styled.p as="span" sx={{ color: '#ff6032' }}>{` ♥ `}</Styled.p>
+            in Tel Aviv
           </Styled.p>
         </footer>
-      </div>
+      </Box>
     </Styled.root>
   )
 }

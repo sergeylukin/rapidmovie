@@ -75,6 +75,9 @@ services:
       - type: rewrite
         source: /title/*
         destination: /title/
+      - type: redirect
+        source: /title/:id
+        destination: /title/:id/
     buildCommand: cd frontend && npm install && ./scripts/wait-for-it.sh rapidmovie-backend-pr-6.onrender.com:80 -- npm run build
     staticPublishPath: ./frontend/public
 
