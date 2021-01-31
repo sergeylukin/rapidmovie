@@ -7,18 +7,18 @@ module.exports = {
 
     let entity = await strapi.query('movie').findOne({ imdbID });
     if (!entity) {
-      if (/(ch|co|ev|nm|tt)\d{6,}/.test(imdbID)) {
-        entity = await strapi.query('movie').create({
-          imdbID,
-          fetchDataFromRemote: true
-        });
-        console.log('loaded via API')
-        console.log(entity)
+      if (/\w{2}\d{6,}/.test(imdbID)) {
+        try {
+          entity = await strapi.query('movie').create({
+            imdbID,
+            fetchDataFromRemote: true
+          });
+        } catch (err) {
+          throw strapi.errors.notFound("Not found")
+        }
       } else {
         throw strapi.errors.badRequest("Not found")
       }
-    } else {
-        console.log('loaded from DB')
     }
     return sanitizeEntity(entity, { model: strapi.models.movie });
   },

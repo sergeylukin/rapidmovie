@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import Layout from './layout'
+import NotFound from '../pages/404'
 import { Text, Flex, Styled, jsx, Grid, Box } from "theme-ui"
 import axios from 'axios'
+import SEO from "./seo"
 
 export default ({ imdbID, pageContext: {title, imdbRating, plot, gatsbyBackendURL} }) => {
 
   const [movie, setMovie] = useState({})
 
-  console.log(imdbID)
   useEffect(() => {
     const loadMovie = async () => {
       if (title && plot) {
+        console.log('GOT titlt and plot WTF')
         setMovie({
           title,
           imdbRating,
@@ -18,15 +20,20 @@ export default ({ imdbID, pageContext: {title, imdbRating, plot, gatsbyBackendUR
         })
       } else {
         const url = `${gatsbyBackendURL}/movies/${imdbID}`
-        const entity = await axios.get(url)
-        setMovie(entity.data)
+        try {
+          const entity = await axios.get(url)
+          setMovie(entity.data)
+        } catch (err) {
+          setMovie(null)
+        }
       }
     }
     loadMovie()
   }, [])
 
-  return (
+  return movie === null ? <NotFound /> : (
     <Layout>
+      <SEO title={movie.title ? movie.title : 'Loading'} />
       <Flex
         sx={{
           justifyContent: "center",
@@ -35,12 +42,11 @@ export default ({ imdbID, pageContext: {title, imdbRating, plot, gatsbyBackendUR
         }}
         >
         <Box>
-          <Text
+          <Text variant="movie.title"
             sx={{
               pt: 3,
               fontSize: 4,
               fontWeight: 'bold',
-              textAlign: 'center',
             }}>{movie.title}</Text>
         </Box>
         <Box>

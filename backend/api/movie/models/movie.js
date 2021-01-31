@@ -33,7 +33,26 @@ const fetchMovie = async (imdbID) => {
       case "Writer": movie.writer = response[key]; break;
       case "Actors": movie.actors = response[key]; break;
       case "Plot": movie.plot = response[key]; break;
-      case "imdbRating": movie.imdbRating = parseFloat(response[key]); break;
+      case "Language": movie.language = response[key]; break;
+      case "Country": movie.country = response[key]; break;
+      case "Awards": movie.awards = response[key]; break;
+      case "Poster": movie.poster = response[key]; break;
+      case "Metascore": movie.metascore = response[key]; break;
+      case "imdbRating":
+        movie.imdbRating = parseFloat(response[key]);
+        if (isNaN(movie.imdbRating)) movie.imdbRating = null
+        break;
+      case "imdbVotes":
+        movie.imdbVotes = parseInt(response[key].replace(/[\.\,]/g,''), 10);
+        if (isNaN(movie.imdbVotes)) movie.imdbVotes = null
+        break;
+      case "imdbID": movie.imdbID = response[key]; break;
+      case "Type": movie.type = response[key]; break;
+      case "DVD": movie.DVD = response[key]; break;
+      case "BoxOffice": movie.boxOffice = response[key]; break;
+      case "Production": movie.production = response[key]; break;
+      case "Website": movie.website = response[key]; break;
+      case "Response": movie.response = response[key] === 'True'; break;
     }
   }
   return movie

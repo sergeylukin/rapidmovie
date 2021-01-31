@@ -35,6 +35,12 @@ production and staging environments, read more in [deployment section](https://g
 
 Install [Docker](https://docs.docker.com/get-docker/) to get started.
 
+Add rapidmovie-backend DNS to your `hostname` file (`/etc/hostname` in OS X):
+
+```
+0.0.0.0 rapidmovie-backend
+```
+
 Set environment variables:
 
 ```sh

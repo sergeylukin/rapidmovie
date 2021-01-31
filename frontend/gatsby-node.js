@@ -12,9 +12,25 @@ exports.createPages = async ({ page, actions: { createPage }, graphql}) => {
         nodes {
           id
           title
+          year
+          rated
+          released
+          runtime
+          genre
+          director
+          writer
+          actors
           plot
+          language
+          country
+          awards
+          poster
+          metascore
           imdbRating
+          imdbVotes
           imdbID
+          production
+          website
           slug
         }
       },
@@ -28,21 +44,64 @@ exports.createPages = async ({ page, actions: { createPage }, graphql}) => {
     const gatsbyBackendURL = res.data.site.siteMetadata.gatsbyBackendURL
     console.log(gatsbyBackendURL)
     createPage({
-      path: `/:imdbID`,
-      matchPath: `/:imdbID`,
+      path: `/title/:imdbID`,
+      matchPath: `/title/:imdbID`,
       component: require.resolve(`./src/components/movie`),
       context: {
         gatsbyBackendURL
       }
     })
-    res.data.allStrapiMovie.nodes.forEach(({title, plot, imdbRating, imdbID}) => {
+    res.data.allStrapiMovie.nodes.forEach(({
+      id,
+      title,
+      year,
+      rated,
+      released,
+      runtime,
+      genre,
+      director,
+      writer,
+      actors,
+      plot,
+      language,
+      country,
+      awards,
+      poster,
+      metascore,
+      imdbRating,
+      imdbVotes,
+      imdbID,
+      production,
+      website,
+      slug,
+      gatsbyBackendURL,
+    }) => {
       createPage({
-        path: `/${imdbID}`,
+        path: `/title/${imdbID}`,
         component: require.resolve('./src/components/movie'),
         context: {
+          id,
           title,
+          year,
+          rated,
+          released,
+          runtime,
+          genre,
+          director,
+          writer,
+          actors,
           plot,
+          language,
+          country,
+          awards,
+          poster,
+          metascore,
           imdbRating,
+          imdbVotes,
+          imdbID,
+          production,
+          website,
+          slug,
           gatsbyBackendURL,
         }
       })
