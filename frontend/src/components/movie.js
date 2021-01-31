@@ -87,16 +87,10 @@ export default ({ slug, pageContext }) => {
   return !isMovieLoaded ? <Loading /> : (
     <Layout>
       <SEO title={movie.title} />
-      <Flex
-        sx={{
-          flexDirection: "column",
-        }}
-        >
+      <Flex sx={{ flexDirection: "column" }}>
         <Text as="h1" variant="variants.movie.title">{movie.title}</Text>
         <Flex
-          sx={{
-            flexDirection: ['column', null, 'row', null]
-          }}>
+          sx={{ flexDirection: ['column', null, 'row', null] }}>
           <Box sx={{
             flexGrow: 1,
             textAlign: ['center', null, 'left', null],

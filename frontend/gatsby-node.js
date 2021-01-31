@@ -44,8 +44,8 @@ exports.createPages = async ({ page, actions: { createPage }, graphql}) => {
     const gatsbyBackendURL = res.data.site.siteMetadata.gatsbyBackendURL
     console.log(gatsbyBackendURL)
     createPage({
-      path: `/title/:slug`,
-      matchPath: `/title/:slug`,
+      path: `/title/:slug/`,
+      matchPath: `/title/:slug/`,
       component: require.resolve(`./src/components/movie`),
       context: {
         gatsbyBackendURL,
@@ -78,7 +78,7 @@ exports.createPages = async ({ page, actions: { createPage }, graphql}) => {
       gatsbyBackendURL,
     }) => {
       createPage({
-        path: `/title/${imdbID}`,
+        path: `/title/${imdbID}/`,
         component: require.resolve('./src/components/movie'),
         context: {
           id,
