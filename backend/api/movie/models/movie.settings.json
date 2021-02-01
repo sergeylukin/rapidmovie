@@ -15,7 +15,7 @@
       "type": "string"
     },
     "year": {
-      "type": "integer"
+      "type": "string"
     },
     "rated": {
       "type": "string"
