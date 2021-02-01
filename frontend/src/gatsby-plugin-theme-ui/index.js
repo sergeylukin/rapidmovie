@@ -96,7 +96,7 @@ export default {
         p: 3,
         margin: '0 auto',
         mt: [4, null, 0, null],
-        maxWidth: ['400px', null, '100%', null],
+        maxWidth: ['400px', '100%', '100%', '100%'],
         background: '#f3f3f3',
         ' dl': {
           m: 0,

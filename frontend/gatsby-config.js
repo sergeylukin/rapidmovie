@@ -4,6 +4,7 @@ module.exports = {
     description: `Little movies search app`,
     author: `@sergey_lukin`,
     gatsbyBackendURL: process.env.GATSBY_BACKEND_URL,
+    baseURL: `https://rapidmovie.sergeylukin.com`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -41,9 +42,5 @@ module.exports = {
         contentTypes: [`movie`],
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-create-client-paths`,
-    //   options: { prefixes: [`/mo/*`] },
-    // },
   ],
 }
