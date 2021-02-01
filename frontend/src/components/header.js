@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Box, Styled, jsx } from "theme-ui"
+import { Box, Text, Styled, jsx } from "theme-ui"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
@@ -21,11 +21,10 @@ const Header = ({ siteTitle }) => (
         <Link
           to="/"
           sx={{
-            color: `muted`,
             textDecoration: `none`,
           }}
         >
-          {siteTitle}
+          <Text variant="variants.siteTitle">{siteTitle}</Text>
         </Link>
       </Styled.h1>
     </div>

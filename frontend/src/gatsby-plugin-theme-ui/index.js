@@ -31,6 +31,26 @@ export default {
       fontWeight: 'body',
     },
   },
+  buttons: {
+    primary: {
+      color: 'background',
+      bg: 'primary',
+      '&:hover': {
+        bg: 'secondary',
+      }
+    },
+    disabled: {
+      color: 'textGray',
+      bg: 'muted',
+    },
+    secondary: {
+      color: 'background',
+      bg: 'secondary',
+      '&:hover': {
+        bg: 'primary',
+      }
+    },
+  },
   colors: {
     ...tailwind.colors,
     muted: '#afafaf',
@@ -119,6 +139,24 @@ export default {
         }
       }
     },
+    movieRow: {
+      borderBottom: '1px solid black',
+      mt: 4,
+      p: 2,
+    },
+    movieLink: {
+      // bg: baseColors.gray[1],
+      'a': {
+        color: 'primary',
+        textDecoration: 'none',
+        '&:hover': {
+          color: 'secondary',
+        }
+      }
+    },
+    siteTitle: {
+      color: `#404040`,
+    },
     siteHeader: {
       borderBottom: '1px solid #dadada',
       textAlign: 'center',
@@ -127,7 +165,8 @@ export default {
     siteContainer: {
       maxWidth: 960,
       margin: '0 auto',
-      py: 2,
+      pt: 4,
+      pb: 3,
       px: 3,
     }
   },

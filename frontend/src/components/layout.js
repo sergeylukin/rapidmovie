@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Box, Styled, jsx } from "theme-ui"
+import { Flex, Box, Styled, jsx } from "theme-ui"
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
@@ -20,9 +20,21 @@ const Layout = ({ children }) => {
 
   return (
     <Styled.root>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <Box variant="variants.siteContainer">
-        <main>{children}</main>
+      <Flex
+        sx={{
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}>
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <main
+          sx={{
+            flex: '1 1 auto',
+          }}
+          >
+          <Box variant="variants.siteContainer">
+          {children}
+          </Box>
+        </main>
         <footer>
           <Styled.p sx={{ p: 4, textAlign: 'center' }}>
             Built with 
@@ -30,7 +42,7 @@ const Layout = ({ children }) => {
             in Tel Aviv
           </Styled.p>
         </footer>
-      </Box>
+      </Flex>
     </Styled.root>
   )
 }
