@@ -70,12 +70,12 @@ services:
         value: production
       - key: GATSBY_BACKEND_URL
         value: https://rapidmovie-backend.sergeylukin.com
-        previewValue: https://rapidmovie-backend-pr-8.onrender.com
+        previewValue: https://rapidmovie-backend-pr-9.onrender.com
     routes:
       - type: rewrite
         source: /title/*/
         destination: /title/
-    buildCommand: cd frontend && npm install && ./scripts/wait-for-it.sh rapidmovie-backend-pr-6.onrender.com:80 -- npm run build
+    buildCommand: cd frontend && npm install && ./scripts/wait-for-it.sh rapidmovie-backend-pr-9.onrender.com:80 -- npm run build
     staticPublishPath: ./frontend/public
 
 databases:
