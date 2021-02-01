@@ -105,11 +105,7 @@ export default ({ slug, pageContext }) => {
           <Text as="h1" variant="variants.movie.title">{movie.title}</Text>
           <Flex
             sx={{ flexDirection: ['column', null, 'row', null] }}>
-            <Box sx={{
-              flexGrow: 1,
-              textAlign: ['center', null, 'left', null],
-              width: '100%',
-            }} variant="variants.movie.cover">
+            <Box variant="variants.movie.cover">
               <img src={movie.poster} width="100%" />
             </Box>
             <Box variant="variants.movie.details">

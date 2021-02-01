@@ -33,6 +33,7 @@ export default {
   },
   colors: {
     ...tailwind.colors,
+    muted: '#afafaf',
     background: 'white',
     text: baseColors.black[1],
     textGray: "#6e6e6e",
@@ -87,8 +88,13 @@ export default {
         fontSize: 2,
       },
       cover: {
+        flexGrow: 1,
+        textAlign: ['center', null, 'left', null],
+        minWidth: ['100%', null, '300px', null],
+        pr: [0, null, 4, null],
         '> img': {
-          maxWidth: '300px'
+          maxWidth: '300px',
+          width: '100%',
         }
       },
       details: {
@@ -96,7 +102,7 @@ export default {
         p: 3,
         margin: '0 auto',
         mt: [4, null, 0, null],
-        maxWidth: ['400px', '100%', '100%', '100%'],
+        maxWidth: ['100%', '80%', '100%', null],
         background: '#f3f3f3',
         ' dl': {
           m: 0,
@@ -104,7 +110,7 @@ export default {
         ' dt': {
           pt: 3,
         },
-        ' dt:first-child': {
+        ' dt:first-of-type': {
           pt: 0,
         },
         ' dd': {
@@ -114,7 +120,7 @@ export default {
       }
     },
     siteHeader: {
-      background: baseColors.gray[6],
+      borderBottom: '1px solid #dadada',
       textAlign: 'center',
       padding: [4, null, null, 3],
     },
